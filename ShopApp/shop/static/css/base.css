@@ -1,0 +1,30 @@
+
+.product_unit {
+    position: relative;
+    float: left;
+    width: 250px;
+    height: 250px;
+    margin-left: 100px;
+}
+
+.product_unit img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-radius: 200px; /* Радиус скругления */
+    box-shadow: 0 0 7px #666; /* Параметры тени */
+}
+
+.product_unit_txt {
+    width: 250px;
+    text-align: center;
+    position: relative;
+    margin-top: 255px;
+}
+
+.a {
+    text-decoration: black;
+}

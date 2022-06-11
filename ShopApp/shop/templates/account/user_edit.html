@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Настройка аккаунта{% endblock %}
+
+{% block content %}
+    <h1>Изменить свой аккаунт</h1>
+    <p>Вы можете редактировать свою учетную запись, используя следующую форму:</p>
+    <form action="." method="post" enctype="multipart/form-data">
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Сохранить"></p>
+    </form>
+{% endblock %}

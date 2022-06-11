@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="." method="post">
+        <div class="row">
+            <div class="alert alert-dark col-5 offset-4">
+                <div class="alert text-center">
+                    <p class="fs-4">Регистрация</p>
+                    {% for field in user_form %}
+                        <div class="container alert alert-dark">
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="container text-center">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-dark text-center">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </form> 
+</div>
+{% endblock %}
