@@ -71,7 +71,7 @@ def about(request):
     return render(request, 'about.html')
 
 def handler404(request, exception=None):
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect('/')
 
 def handler500(request, exception=None):
     return HttpResponseRedirect('/')
@@ -82,28 +82,43 @@ def product_list(request, slug=None):
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
 
-    paginator = Paginator(products, 6)
-    page = request.GET.get('page')
-    try:
-        page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer deliver the first page
-        page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range deliver last page of results
-        page = paginator.page(paginator.num_pages)
+    paginator = Paginator(products, 25)
+
     if slug:
         category = get_object_or_404(Category, slug=slug)
         products = products.filter(category=category)
+
+        paginator = Paginator(products, 3)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        try:
+            products = paginator.page(page_number)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
         return render(request,'shop/list.html',
-            {'page': page,
+            {'page_obj': page_obj,
             'category': category,
             'categories': categories,
             'products': products}
         )
     else:
+        paginator = Paginator(products, 6)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        try:
+            products = paginator.page(page_number)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
         return render(request,'shop/list.html',
-            {'page': page,
+            {'page_obj': page_obj,
             'category': category,
             'categories': categories,
             'products': products}

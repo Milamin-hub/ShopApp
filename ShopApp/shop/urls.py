@@ -1,11 +1,11 @@
 from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
-from django.urls import re_path, path
+from django.urls import re_path
 from shop.views import *
 
 
 
 urlpatterns = [
-    path('<slug>/',
+    re_path('^category/(?P<slug>[-\w]+)/$',
         product_list,
         name='product_list_by_category'
     ),
