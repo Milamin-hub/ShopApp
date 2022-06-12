@@ -1,0 +1,11 @@
+<div id="sidebar">
+    {% if not categories %}
+        <h6>Categories: <a href="{% url 'product_list' %}">All</a></h6>
+    {% endif %}
+    <h6>Categories: 
+    {% for c in categories %}
+        <a href="{{c.get_absolute_url}}">{{ c.name }}</a>
+    {% endfor %}
+    </h6>
+</div>
+<hr>

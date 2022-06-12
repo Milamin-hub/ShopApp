@@ -1,12 +1,12 @@
 from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
-from django.urls import re_path
+from django.urls import re_path, path
 from shop.views import *
 
 
 
 urlpatterns = [
-    re_path(r'^(?P<id>\d+)/$',
-        ProductListView.as_view(),
+    path('<slug>/',
+        product_list,
         name='product_list_by_category'
     ),
     re_path(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',
@@ -26,7 +26,7 @@ urlpatterns = [
     ),
 
     re_path(r'^user_profile/', user_profile, name='user_profile'),
-    re_path(r'^$', ProductListView.as_view(), name='home'),
+    re_path(r'^$', product_list, name='home'),
     re_path(r'^user_edit/$', user_edit, name='user_edit'),
     re_path(r'^register/$', register, name='register'),
     re_path(r'^$', dashboard, name='dashboard'),

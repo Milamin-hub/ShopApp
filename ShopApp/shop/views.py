@@ -1,6 +1,6 @@
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView
 from .models import Category, Product
 from django.contrib import messages
 from .models import Profile
@@ -77,11 +77,34 @@ def handler500(request, exception=None):
     return HttpResponseRedirect('/')
 
 
-class ProductListView(ListView):
-    queryset = Product.objects.all()
-    extra_context = {
-        'categories': Category.objects.all(),
-    }
-    paginate_by = 6
-    template_name = 'shop/list.html'
-    
+def product_list(request, slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page')
+    try:
+        page = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        page = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        page = paginator.page(paginator.num_pages)
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
+        products = products.filter(category=category)
+        return render(request,'shop/list.html',
+            {'page': page,
+            'category': category,
+            'categories': categories,
+            'products': products}
+        )
+    else:
+        return render(request,'shop/list.html',
+            {'page': page,
+            'category': category,
+            'categories': categories,
+            'products': products}
+        )
