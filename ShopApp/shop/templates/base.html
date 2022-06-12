@@ -16,7 +16,7 @@
             {% if request.user.is_authenticated %}
                 <div class="col-md-0 text-end mb-md-0">
                     <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2 text-decoration-none">Моя страница</a>
-                    <a href="{% url 'home' %}" class="btn btn-outline-success me-2 text-decoration-none">Создать пост</a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-success me-2 text-decoration-none">Корзина</a>
                     <a href="{% url 'home' %}" class="btn btn-outline-dark me-2 text-decoration-none">Выйти</a>
                 </div>
             {% else %}
