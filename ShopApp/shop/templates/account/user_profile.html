@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Профиль{% endblock %}
 
@@ -9,7 +9,7 @@
                 {% if user.profile.photo.name %}
                     <img src="{{ user.profile.photo.url }}" width="250px" height="250px" class="edge">
                 {% else %}
-                    <img src="/media/users/2022/05/29/user.png" width="250px" height="250px" class="edge">
+                    <img src="{% static 'img/no_image.png' %}" width="250px" height="250px" class="edge">
                 {% endif %}
                 <br>
                 <br>

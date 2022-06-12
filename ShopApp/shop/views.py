@@ -1,4 +1,6 @@
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from django.http import HttpResponseRedirect
+from django.views.generic import ListView
 from .models import Category, Product
 from django.contrib import messages
 from .models import Profile
@@ -56,20 +58,6 @@ def register(request):
         user_form = UserRegistrationForm()
     return render(request, 'account/register.html', {'user_form': user_form})
 
-def product_list(request, category_slug=None):
-    category = None
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
-    return render(request,
-                  'shop/list.html',
-                  {'category': category,
-                   'categories': categories,
-                   'products': products})
-
-
 def product_detail(request, id, slug):
     product = get_object_or_404(Product,
                                 id=id,
@@ -78,3 +66,22 @@ def product_detail(request, id, slug):
     return render(request,
                   'shop/detail.html',
                   {'product': product})
+
+def about(request):
+    return render(request, 'about.html')
+
+def handler404(request, exception=None):
+    return HttpResponseRedirect("/")
+
+def handler500(request, exception=None):
+    return HttpResponseRedirect('/')
+
+
+class ProductListView(ListView):
+    queryset = Product.objects.all()
+    extra_context = {
+        'categories': Category.objects.all(),
+    }
+    paginate_by = 6
+    template_name = 'shop/list.html'
+    

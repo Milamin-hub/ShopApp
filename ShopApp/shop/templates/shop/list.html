@@ -1,33 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    Products
 {% endblock %}
 {% block content %}
     <div id="sidebar">
-        <h4>Categories</h3>
-        <ul>
-            {% if not category %}
-                <p class="selected">
-                    <a href="{% url 'home' %}">All</a>
-                </p>
-            {% endif %}
-            {% for c in categories %}
-                {% if category.slug == c.slug %}
-                    <li class="selected">
-                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+        {% if not categories %}
+            <h6>Categories: <a href="{% url 'home' %}">All</a></h6>
+        {% endif %}
+        <h6>Categories:
+             
+        {% for c in categories %}
+            <a href="{{c.get_absolute_url}}">{{ c }}</a>
+        {% endfor %}
+        </h6>
     </div>
     <hr>
-    <h4>{% if category %}{{ category.name }}{% else %}Products:{% endif %}</h4>
-    {% for product in products %}
+    <h4>{% if categories %}{{ categories.name }}{% else %}Products:{% endif %}</h4>
+    {% for product in object_list %}
         <div class="product_unit mb-md-5">
             <div class="container">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}">
+                    <img src="{{ product.image.url }}" name="{{product}}"> 
                 {% else %}
                     <img src="{% static 'img/no_image.png' %}">
                 {% endif %}
@@ -36,7 +30,11 @@
                 <button class="product_unit_txt btn btn-outline-dark">
                     ${{ product.price }}
                 </button>
+                
             </a>
         </div>
     {% endfor %}
+    <div class="container pagination text-align-center">
+        {% include "pagination.html" with page=page_obj %}
+    </div>
 {% endblock %}
