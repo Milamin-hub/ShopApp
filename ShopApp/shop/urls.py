@@ -5,7 +5,7 @@ from shop.views import *
 
 
 urlpatterns = [
-    re_path('^category/(?P<slug>[-\w]+)/$',
+    re_path(r'^category/(?P<slug>[-\w]+)/$',
         product_list,
         name='product_list_by_category'
     ),
