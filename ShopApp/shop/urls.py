@@ -12,10 +12,12 @@ urlpatterns = [
     re_path(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',
         product_detail,
         name='product_detail'),
-        re_path(r'^login/$', LoginView.as_view(
+
+    re_path(r'^login/$', LoginView.as_view(
         template_name='account/login.html'), 
         name="login"
     ),
+    
     re_path(r'^logout/$', LogoutView.as_view(
         template_name='account/logout.html'
         ), name="logout"

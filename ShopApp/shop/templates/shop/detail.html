@@ -1,17 +1,47 @@
-{% extends "product/base.html" %}
+{% extends "base.html" %}
+{% load static %}
 {% block title %}
-    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+    Detail
 {% endblock %}
 {% block content %}
-    <div class="product-detail">
-        {% if product.image %}
-            <img src="{{ product.image.url }}">
-        {% else %}
-            <img src="{% static 'img/no_image.png' %}">
-        {% endif %}
-        <h1>{{ product.name }}</h1>
-        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
-        <p class="price">${{ product.price }}</p>
-        {{ product.description|linebreaks }}
+    <div class="row">
+        <div class="col-sm-3">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="product_detail_img">
+            {% else %}
+                <img src="{% static 'img/no_image.png' %}" class="product_detail_img">
+            {% endif %}
+            <div class="">
+                <a href="" class="cart btn btn-outline-dark">Добавить в корзину</a>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="product_detail_txt">
+                <h4>Имя продукта:</h4>
+                <hr>
+                <h4>Категория:</h4>
+                <hr>
+                <h4>Цена: </h4>
+                <hr>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="product_detail_txt">
+                <h4>{{ product.name }}</h4>
+                <br>
+                <h4><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h4>
+                <br>
+                <h4 class="price">${{ product.price }}</h4>
+            </div>
+        </div>
     </div>
+    {% if product.description%}
+    <div class="product_description alert alert-success">
+        <h4>Описание:</h4>   
+        <div class="alert alert-success">
+            {{ product.description }}
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}
+

@@ -15,7 +15,7 @@
                         <img src="{% static 'img/no_image.png' %}">
                     {% endif %}
                 </div>
-                <a href="{% url 'home' %}">
+                <a href="{% url 'product_detail' product.id product.slug%}">
                     <button class="product_unit_txt btn btn-outline-dark">
                         ${{ product.price }}
                     </button>
