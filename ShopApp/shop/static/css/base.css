@@ -50,10 +50,22 @@
 .cart {
     text-decoration: none;
     margin-top: 25px;
-    margin-left: 35px;
+    margin-left: 20px;
 }
 
 .product_description {
     margin-top: 25px;
     margin-left: 250px;
+}
+
+.cart_img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 200px; /* Радиус скругления */
+    box-shadow: 0 0 7px #666; /* Параметры тени */
+}
+
+.total {
+    text-align: right;
 }

@@ -1,6 +1,7 @@
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
+from cart.forms import CartAddProductForm
 from .models import Category, Product
 from django.contrib import messages
 from .models import Profile
@@ -60,12 +61,15 @@ def register(request):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product,
-                                id=id,
-                                slug=slug,
-                                available=True)
-    return render(request,
-                  'shop/detail.html',
-                  {'product': product})
+        id=id,
+        slug=slug,
+        available=True
+    )
+    cart_product_form = CartAddProductForm()
+    return render(request,'shop/detail.html',
+        {'product': product,
+        'cart_product_form': cart_product_form}
+    )
 
 def about(request):
     return render(request, 'about.html')
@@ -123,3 +127,5 @@ def product_list(request, slug=None):
             'categories': categories,
             'products': products}
         )
+
+

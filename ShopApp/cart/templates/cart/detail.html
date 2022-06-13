@@ -4,49 +4,52 @@
     Your shopping cart
 {% endblock %}
 {% block content %}
-    <h1>Your shopping cart</h1>
-    <table class="cart">
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Remove</th>
-            <th>Unit price</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
-            {% with product=item.product %}
-                <tr>
-                    <td>
-                        <a href="{{ product.get_absolute_url }}">
-                            <img src="
-                                {% if product.image %}
-                                    {{ product.image.url }}
-                                {% else %}
-                                    {% static 'img/no_image.png' %}
-                                {% endif %}">
-                        </a>
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td><a href="{% url 'cart_remove' product.id%}">Remove</a></td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
-                </tr>
-            {% endwith %}
-        {% endfor %}
-        <tr class="total">
-            <td>Total</td>
-            <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <p class="text-right">
-        <a href="{% url 'home' %}" class="button light">Continue shopping</a>
-        <a href="#" class="button">Checkout</a>
+    <h3>Your shopping cart:</h3>
+    <br>
+    {% for item in cart %}
+        {% with product=item.product %}
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="{{ product.get_absolute_url }}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="cart_img">
+                    {% else %}
+                        <img src="{% static 'img/no_image.png' %}" class="cart_img">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <div class="product_detail_txt">
+                    <h6>Product:</h6>
+                    <h6>Quantity:</h6>
+                    <h6>Remove:</h6>
+                    <h6>Unit price:</h6>
+                    <h6>Price:</h6>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="product_detail_txt">
+                    <h6>{{ product.name }}</h6>
+                    <h6>{{ item.quantity }}</h6>
+                    <h6><a href="{% url 'cart_remove' product.id%}">Remove</a></h6>
+                    <h6>${{ item.price }}</h6>
+                    <h6>${{ item.total_price }}</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+        {% endwith %}
+    {% endfor %}
+    <hr>
+
+    <div class="total">
+        <h5>Total: ${{ cart.get_total_price }}</h5>
+    </div>
+    <p class="total">
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Continue shopping</a>
+        <a href="#" class="btn btn-outline-dark">Checkout</a>
     </p>
+
 {% endblock %}
+

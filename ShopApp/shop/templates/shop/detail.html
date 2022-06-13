@@ -12,7 +12,11 @@
                 <img src="{% static 'img/no_image.png' %}" class="product_detail_img">
             {% endif %}
             <div class="">
-                <a href="" class="cart btn btn-outline-dark">Добавить в корзину</a>
+                <form action="{% url 'cart_add' product.id %}" method="post" class="cart">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <input type="submit" value="Add to cart" class="btn btn-outline-dark">
+                </form>
             </div>
         </div>
         <div class="col-sm-3">
