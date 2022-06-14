@@ -28,8 +28,9 @@
             {% endif %}
         </header>
     </div>
-    <div class="container">
-        <div class="alert alert-success">
+    {% if request.user.is_authenticated %}
+        <div class="container">
+            <div class="alert alert-success">
                 {% with total_items=cart|length %}
                     {% if cart|length > 0 %}
                         <div class="row">
@@ -49,10 +50,10 @@
                         Your cart is empty.
                     {% endif %}
                 {% endwith %}
+            </div>
+            <hr>
         </div>
-        <hr>
-    </div>
-    
+    {% endif %}
     <div class="container">
         {% block content %}
         {% endblock %}
