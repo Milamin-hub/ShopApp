@@ -27,9 +27,7 @@ urlpatterns = [
         name='logout_then_login'
     ),
 
-    re_path(r'^user_profile/', user_profile, name='user_profile'),
     re_path(r'^$', product_list, name='home'),
-    re_path(r'^user_edit/$', user_edit, name='user_edit'),
     re_path(r'^register/$', register, name='register'),
     re_path(r'^$', dashboard, name='dashboard'),
     re_path(r'^about/', about, name="about"),
