@@ -66,6 +66,10 @@
     box-shadow: 0 0 7px #666; /* Параметры тени */
 }
 
-.total {
-    text-align: right;
+.order {
+    margin-left: 80px;
+}
+
+.order_txt {
+    margin-left: 25px;
 }

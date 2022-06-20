@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-5">
+            <form action="." method="post" class="order-form">
+                <p class="fs-4 order ">Checkout</p>
+                {% for field in form %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-1.5">
+                                {{field.label}}:
+                            </div>
+                            <div class="col-sm-2">
+                                {{ field }}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+                <p class="order"><input type="submit" value="Place order" class="btn btn-outline-dark"></p>
+                {% csrf_token %}
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <p class="fs-4 text-center">Your orders</p>
+                {% for item in cart %}
+                    <div class="container alert alert-success">
+                        {{ item.product.name }} x {{ item.quantity }} :
+                        <span>${{ item.total_price }}</span>
+                    </div>
+                {% endfor %}
+            <p class="text-end">Total: ${{ cart.get_total_price }}</p>
+            <hr>
+        </div>
+    </div>
+{% endblock %}
+

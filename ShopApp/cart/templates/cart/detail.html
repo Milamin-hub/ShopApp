@@ -4,6 +4,16 @@
     Your shopping cart
 {% endblock %}
 {% block content %}
+    {% if request.user.is_authenticated %}
+        {% with total_items=cart|length %}
+            {% if not cart|length > 0 %}
+                <div class="alert alert-success">
+                    Your cart is empty.
+                </div>
+                <hr>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
     <h3>Your shopping cart:</h3>
     <br>
     {% for item in cart %}
@@ -48,7 +58,7 @@
     </div>
     <p class="total">
         <a href="{% url 'home' %}" class="btn btn-outline-dark">Continue shopping</a>
-        <a href="#" class="btn btn-outline-dark">Checkout</a>
+        <a href="{% url 'order_create' %}" class="btn btn-outline-dark">Checkout</a>
     </p>
 
 {% endblock %}
