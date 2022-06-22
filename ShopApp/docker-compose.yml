@@ -10,9 +10,32 @@ services:
      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/ShopApp
      networks:
      - rabbitmq_go_net
-    
 
- 
+  app:
+    build: .
+    volumes:
+      - .:/ShopApp
+    ports:
+      - 8000:8000
+    network_mode: "host"
+    image: app:ShopApp
+    container_name: django
+    command: python manage.py runserver
+  
+  celery:
+    build: .
+    volumes:
+      - .:/ShopApp
+    image: celery:5.2.7
+    network_mode: "host"
+    command: celery -A ShopApp worker -l INFO
+    depends_on:
+      - rabbitmq
+      
+
 networks:
   rabbitmq_go_net:
     driver: bridge
+
+  
+  
