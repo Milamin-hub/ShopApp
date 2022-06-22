@@ -31,6 +31,16 @@ services:
     command: celery -A ShopApp worker -l INFO
     depends_on:
       - rabbitmq
+
+  flower:
+    build: .
+    volumes:
+      - .:/ShopApp
+    image: celery:5.2.7
+    network_mode: "host"
+    command: celery -A ShopApp flower
+    depends_on:
+      - rabbitmq
       
 
 networks:
